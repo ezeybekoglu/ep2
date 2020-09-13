@@ -162,6 +162,7 @@ public class PostController {
         }
         Student student,s;
         Course course, c;
+        CustomSTC cast;
         student = studentRepository.findByName(requestParams.get("studentName"));
         course = courseRepository.findByName(requestParams.get("courseName"));
 
@@ -175,11 +176,18 @@ public class PostController {
             c.setName(requestParams.get("courseName"));
             course = c;
         }
-        CustomSTC cast = new CustomSTC();
-        cast.setStudent(student);
-
-        cast.setCourse(course);
-        castRepo.save(cast);
+        if(castRepo.existsByStudent_idAndCourse_id(student.getId(),course.getId()))
+        {
+            System.out.println("record exists");
+        }
+        else
+        {
+            System.out.println("record not exists");
+            cast = new CustomSTC();
+            cast.setStudent(student);
+            cast.setCourse(course);
+            castRepo.save(cast);
+        }
     }
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
