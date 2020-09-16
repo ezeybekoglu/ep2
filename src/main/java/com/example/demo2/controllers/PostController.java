@@ -176,7 +176,7 @@ public class PostController {
         cast = new CustomSTC();
         if (castRepo.existsByCourse_idAndStudent_id(course.getId(), student.getId())) {
             System.out.println("exists");
-            throw new IllegalArgumentException("Record exists asdasdasdasdasdasd");
+            throw new IllegalArgumentException("Record exists");
         } else {
             System.out.println("not exists");
             //cast = new CustomSTC();
