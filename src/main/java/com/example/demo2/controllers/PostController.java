@@ -30,18 +30,18 @@ public class PostController {
 
     @RequestMapping(value = "/student/add", method = RequestMethod.POST)
     public void addNewStudent(@RequestParam Map<String, String> requestParams) {
-        if (!requestParams.containsKey("name") || requestParams.get("name").isEmpty()) {
+        if (!requestParams.containsKey("name") || requestParams.get("name").trim().isEmpty()) {
             //parameters empty or not defined
             throw new IllegalArgumentException("{\"error\":\"At least one parameter is invalid or not supplied\"}");
         }
         Student student = new Student();
-        student.setName(requestParams.get("name"));
+        student.setName(requestParams.get("name").trim());
         studentRepository.save(student);
     }
 
     @RequestMapping(value = "/student/update", method = RequestMethod.POST)
     public void updateStudent(@RequestParam Map<String, String> requestParams) {
-        if (!requestParams.containsKey("name") || requestParams.get("name").isEmpty()
+        if (!requestParams.containsKey("name") || requestParams.get("name").trim().isEmpty()
                 || !requestParams.containsKey("id") || requestParams.get("id").isEmpty()) {
             //parameters empty or not defined
             throw new IllegalArgumentException("{\"error\":\"At least one parameter is invalid or not supplied\"}");
@@ -51,7 +51,7 @@ public class PostController {
         Student studentToUpdate = studentRepository.findById(studentId).orElse(null);
         if (studentToUpdate != null) {
             //update name
-            studentToUpdate.setName(requestParams.get("name"));
+            studentToUpdate.setName(requestParams.get("name").trim());
             studentRepository.save(studentToUpdate);
         }
     }
@@ -76,7 +76,7 @@ public class PostController {
             throw new IllegalArgumentException("{\"error\":\"At least one parameter is invalid or not supplied\"}");
         }
         Course course = new Course();
-        course.setName(requestParams.get("name"));
+        course.setName(requestParams.get("name").trim());
         courseRepository.save(course);
     }
 
@@ -85,7 +85,7 @@ public class PostController {
         Long courseId = Long.parseLong(requestParams.get("id"));
         Course courseToUpdate = courseRepository.findById(courseId).orElse(null);
         if (courseToUpdate != null) {
-            courseToUpdate.setName(requestParams.get("name"));
+            courseToUpdate.setName(requestParams.get("name").trim());
             courseRepository.save(courseToUpdate);
         }
     }
@@ -153,15 +153,15 @@ public class PostController {
     @RequestMapping(value = "/cast/add", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomSTC addCAST(@RequestParam(value = "studentName", required = true) String studentName, @RequestParam(value = "courseName", required = true) String courseName) {
-        if (studentName.isEmpty() || courseName.isEmpty()) {
+        if (studentName.trim().isEmpty() || courseName.trim().isEmpty()) {
             //parameters empty or not defined
             throw new IllegalArgumentException("At least one parameter is invalid or not supplied");
         }
         Student student, s;
         Course course, c;
         CustomSTC cast;
-        student = studentRepository.findByName(studentName);
-        course = courseRepository.findByName(courseName);
+        student = studentRepository.findByName(studentName.trim());
+        course = courseRepository.findByName(courseName.trim());
 
         if (student == null) {
             s = new Student();
