@@ -179,7 +179,6 @@ public class PostController {
             throw new IllegalArgumentException("Record exists.");
         } else {
             System.out.println("not exists");
-            //cast = new CustomSTC();
             cast.setStudent(student);
             cast.setCourse(course);
             castRepo.save(cast);
