@@ -1,5 +1,6 @@
 package com.example.demo2.controllers;
 
+import com.example.demo2.StudentNotFoundException;
 import com.example.demo2.model.*;
 import com.example.demo2.repository.CourseRepository;
 import com.example.demo2.repository.CustomSTCRepo;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,44 +30,43 @@ public class PostController {
 
     private StudentService ss;
 
-    @RequestMapping(value = "/student/add", method = RequestMethod.POST)
-    public void addNewStudent(@RequestParam Map<String, String> requestParams) {
-        if (!requestParams.containsKey("name") || requestParams.get("name").trim().isEmpty()) {
-            //parameters empty or not defined
-            throw new IllegalArgumentException("{\"error\":\"At least one parameter is invalid or not supplied\"}");
-        }
-        Student student = new Student();
-        student.setName(requestParams.get("name").trim());
-        studentRepository.save(student);
+
+    @GetMapping("/student")
+    List<Student> students() {
+        return (List<Student>) studentRepository.findAll();
+    }
+    // Single item
+
+    @GetMapping("/student/{id}")
+    Student one(@PathVariable Long id) {
+
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
     }
 
-    @RequestMapping(value = "/student/update", method = RequestMethod.POST)
-    public void updateStudent(@RequestParam Map<String, String> requestParams) {
-        if (!requestParams.containsKey("name") || requestParams.get("name").trim().isEmpty()
-                || !requestParams.containsKey("id") || requestParams.get("id").isEmpty()) {
-            //parameters empty or not defined
-            throw new IllegalArgumentException("{\"error\":\"At least one parameter is invalid or not supplied\"}");
-        }
-
-        Long studentId = Long.parseLong(requestParams.get("id"));
-        Student studentToUpdate = studentRepository.findById(studentId).orElse(null);
-        if (studentToUpdate != null) {
-            //update name
-            studentToUpdate.setName(requestParams.get("name").trim());
-            studentRepository.save(studentToUpdate);
-        }
+    @PostMapping("/student")
+    Student newStudent(@RequestBody Student newStudent) {
+        return studentRepository.save(newStudent);
     }
 
-    @RequestMapping(value = "/student/delete", method = RequestMethod.POST)
-    public void deleteStudent(@RequestParam Map<String, String> requestParams) {
-        //get id param
-        Long studentId = Long.parseLong(requestParams.get("id"));
-        Student studentToDelete = studentRepository.findById(studentId).orElse(null);
-        //if id exists
-        if (studentToDelete != null) {
-            //delete student
-            studentRepository.delete(studentToDelete);
-        }
+
+
+    @PutMapping("/student/{id}")
+    Student replaceEmployee(@RequestBody Student newEmployee, @PathVariable Long id) {
+
+        return studentRepository.findById(id)
+                .map(employee -> {
+                    employee.setName(newEmployee.getName());
+                    return studentRepository.save(employee);
+                })
+                .orElseGet(() -> {
+                    newEmployee.setId(id);
+                    return studentRepository.save(newEmployee);
+                });
+    }
+    @DeleteMapping(value = "/student/{id}")
+    public void deleteStudent(@PathVariable Long id) {
+        studentRepository.deleteById(id);
     }
 
 
