@@ -52,7 +52,7 @@ public class PostController {
 
 
     @PutMapping("/student/{id}")
-    Student replaceEmployee(@RequestBody Student newStudent, @PathVariable Long id) {
+    Student replaceStudent(@RequestBody Student newStudent, @PathVariable Long id) {
 
         return studentRepository.findById(id)
                 .map(employee -> {
@@ -70,34 +70,28 @@ public class PostController {
     }
 
 
-    @RequestMapping(value = "/course/add", method = RequestMethod.POST)
-    public void addNewCourse(@RequestParam Map<String, String> requestParams) {
-        if (!requestParams.containsKey("name") || requestParams.get("name").isEmpty()) {
-            //parameters empty or not defined
-            throw new IllegalArgumentException("{\"error\":\"At least one parameter is invalid or not supplied\"}");
-        }
-        Course course = new Course();
-        course.setName(requestParams.get("name").trim());
-        courseRepository.save(course);
+    @PostMapping("/course")
+    Course newCourse(@RequestBody Course newCourse) {
+        return courseRepository.save(newCourse);
     }
 
-    @RequestMapping(value = "/course/update", method = RequestMethod.POST)
-    public void updateCourse(@RequestParam Map<String, String> requestParams) {
-        Long courseId = Long.parseLong(requestParams.get("id"));
-        Course courseToUpdate = courseRepository.findById(courseId).orElse(null);
-        if (courseToUpdate != null) {
-            courseToUpdate.setName(requestParams.get("name").trim());
-            courseRepository.save(courseToUpdate);
-        }
+    @PutMapping("/course/{id}")
+    Course replaceCourse(@RequestBody Course newCourse, @PathVariable Long id) {
+
+        return courseRepository.findById(id)
+                .map(course -> {
+                    course.setName(newCourse.getName());
+                    return courseRepository.save(course);
+                })
+                .orElseGet(() -> {
+                    newCourse.setId(id);
+                    return courseRepository.save(newCourse);
+                });
     }
 
-    @RequestMapping(value = "/course/delete", method = RequestMethod.POST)
-    public void deleteCourse(@RequestParam Map<String, String> requestParams) {
-        Long courseId = Long.parseLong(requestParams.get("id"));
-        Course courseToDelete = courseRepository.findById(courseId).orElse(null);
-        if (courseToDelete != null) {
-            courseRepository.delete(courseToDelete);
-        }
+    @DeleteMapping(value = "/course/{id}")
+    public void deleteCourse(@PathVariable Long id) {
+        studentRepository.deleteById(id);
     }
 
     @RequestMapping(value = "/stc/add", method = RequestMethod.POST)
