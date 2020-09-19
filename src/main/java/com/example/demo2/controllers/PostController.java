@@ -200,8 +200,16 @@ public class PostController {
             throw new IllegalArgumentException("Record exists.");
         } else {
             System.out.println("not exists");
-            cast.setStudent(student);
-            cast.setCourse(course);
+
+            Student s = new Student();
+            s=studentRepository.findByName(student.getName());
+            //s.setId(student.getId());
+            //s.setName(student.getName());
+            Course c = new Course();
+            c = courseRepository.findByName(course.getName().trim());
+
+            cast.setStudent(s);
+            cast.setCourse(c);
             castRepo.save(cast);
         }
         return cast;
