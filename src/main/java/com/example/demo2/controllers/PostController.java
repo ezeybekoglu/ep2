@@ -52,16 +52,16 @@ public class PostController {
 
 
     @PutMapping("/student/{id}")
-    Student replaceEmployee(@RequestBody Student newEmployee, @PathVariable Long id) {
+    Student replaceEmployee(@RequestBody Student newStudent, @PathVariable Long id) {
 
         return studentRepository.findById(id)
                 .map(employee -> {
-                    employee.setName(newEmployee.getName());
+                    employee.setName(newStudent.getName());
                     return studentRepository.save(employee);
                 })
                 .orElseGet(() -> {
-                    newEmployee.setId(id);
-                    return studentRepository.save(newEmployee);
+                    newStudent.setId(id);
+                    return studentRepository.save(newStudent);
                 });
     }
     @DeleteMapping(value = "/student/{id}")
