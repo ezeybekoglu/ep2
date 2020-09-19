@@ -7,6 +7,9 @@ import com.example.demo2.repository.CustomSTCRepo;
 import com.example.demo2.repository.STCRepository;
 import com.example.demo2.repository.StudentRepository;
 import com.example.demo2.services.StudentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -180,6 +183,30 @@ public class PostController {
         }
         return cast;
     }
+    @PostMapping("/cast")
+    CustomSTC newCourse(@RequestBody String str) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(str);
+        Course course = mapper.convertValue(node.get("course"), Course.class);
+        Student student = mapper.convertValue(node.get("student"), Student.class);
+        //CustomSTC cast = new CustomSTC();
+
+
+        //curl -X POST localhost:8080/cast -H 'Content-type:application/json' -d '{"course":{"id":3,"name":"mat2"},"student":{"id":2,"name":"efe1"}}'
+
+        CustomSTC cast = new CustomSTC();
+        if (castRepo.existsByCourse_idAndStudent_id(course.getId(), student.getId())) {
+            System.out.println("exists");
+            throw new IllegalArgumentException("Record exists.");
+        } else {
+            System.out.println("not exists");
+            cast.setStudent(student);
+            cast.setCourse(course);
+            castRepo.save(cast);
+        }
+        return cast;
+    }
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
