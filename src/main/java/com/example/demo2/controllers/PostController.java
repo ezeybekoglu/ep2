@@ -31,21 +31,8 @@ public class PostController {
     @Autowired
     private CustomSTCRepo castRepo;
 
-    private StudentService ss;
 
 
-    @GetMapping("/student")
-    List<Student> students() {
-        return (List<Student>) studentRepository.findAll();
-    }
-    // Single item
-
-    @GetMapping("/student/{id}")
-    Student one(@PathVariable Long id) {
-
-        return studentRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException(id));
-    }
 
     @PostMapping("/student")
     Student newStudent(@RequestBody Student newStudent) {
@@ -54,23 +41,8 @@ public class PostController {
 
 
 
-    @PutMapping("/student/{id}")
-    Student replaceStudent(@RequestBody Student newStudent, @PathVariable Long id) {
 
-        return studentRepository.findById(id)
-                .map(employee -> {
-                    employee.setName(newStudent.getName());
-                    return studentRepository.save(employee);
-                })
-                .orElseGet(() -> {
-                    newStudent.setId(id);
-                    return studentRepository.save(newStudent);
-                });
-    }
-    @DeleteMapping(value = "/student/{id}")
-    public void deleteStudent(@PathVariable Long id) {
-        studentRepository.deleteById(id);
-    }
+
 
 
     @PostMapping("/course")
@@ -78,24 +50,9 @@ public class PostController {
         return courseRepository.save(newCourse);
     }
 
-    @PutMapping("/course/{id}")
-    Course replaceCourse(@RequestBody Course newCourse, @PathVariable Long id) {
 
-        return courseRepository.findById(id)
-                .map(course -> {
-                    course.setName(newCourse.getName());
-                    return courseRepository.save(course);
-                })
-                .orElseGet(() -> {
-                    newCourse.setId(id);
-                    return courseRepository.save(newCourse);
-                });
-    }
 
-    @DeleteMapping(value = "/course/{id}")
-    public void deleteCourse(@PathVariable Long id) {
-        studentRepository.deleteById(id);
-    }
+
 
     @RequestMapping(value = "/stc/add", method = RequestMethod.POST)
     public void addSTC(@RequestParam Map<String, String> requestParams) {
@@ -185,16 +142,17 @@ public class PostController {
     }
     @PostMapping("/cast")
     CustomSTC newCourse(@RequestBody String str) throws JsonProcessingException {
+
+        CustomSTC cast;
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(str);
         Course course = mapper.convertValue(node.get("course"), Course.class);
         Student student = mapper.convertValue(node.get("student"), Student.class);
-        //CustomSTC cast = new CustomSTC();
 
 
         //curl -X POST localhost:8080/cast -H 'Content-type:application/json' -d '{"course":{"id":3,"name":"mat2"},"student":{"id":2,"name":"efe1"}}'
 
-        CustomSTC cast = new CustomSTC();
+        cast = new CustomSTC();
         if (castRepo.existsByCourse_idAndStudent_id(course.getId(), student.getId())) {
             System.out.println("exists");
             throw new IllegalArgumentException("Record exists.");
@@ -202,9 +160,8 @@ public class PostController {
             System.out.println("not exists");
 
             Student s = new Student();
-            s=studentRepository.findByName(student.getName());
-            //s.setId(student.getId());
-            //s.setName(student.getName());
+            s = studentRepository.findByName(student.getName());
+
             Course c = new Course();
             c = courseRepository.findByName(course.getName().trim());
 

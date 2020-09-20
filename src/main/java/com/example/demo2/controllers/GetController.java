@@ -1,8 +1,13 @@
 package com.example.demo2.controllers;
+import com.example.demo2.StudentNotFoundException;
 import com.example.demo2.model.Course;
 import com.example.demo2.model.CustomSTC;
 import com.example.demo2.model.Student;
 import com.example.demo2.model.StudentToCourse;
+import com.example.demo2.repository.CourseRepository;
+import com.example.demo2.repository.CustomSTCRepo;
+import com.example.demo2.repository.STCRepository;
+import com.example.demo2.repository.StudentRepository;
 import com.example.demo2.services.ICSTCService;
 import com.example.demo2.services.ICourseService;
 import com.example.demo2.services.ISTCService;
@@ -17,50 +22,50 @@ import java.util.List;
 public class GetController {
 
     @Autowired
-    private IStudentService studentService;
+    private StudentRepository studentRepository;
     @Autowired
-    private ICourseService courseService;
+    private CourseRepository courseRepository;
     @Autowired
-    private ISTCService stcService;
+    private STCRepository stcRepository;
     @Autowired
-    private ICSTCService castService;
+    private CustomSTCRepo customSTCRepo;
+
+    @GetMapping("/student")
+    List<Student> students() {
+        return (List<Student>) studentRepository.findAll();
+    }
+    // Single item
+
+    @GetMapping("/student/{id}")
+    Student one(@PathVariable Long id) {
+
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(id));
+    }
+
+
+
 
     @GetMapping("/student/list")
     public List<Student> listStudent(Model model) {
 
-        var students = (List<Student>) studentService.findAll();
-
-        model.addAttribute("students", students);
-
-        return students;
+        return (List<Student>) studentRepository.findAll();
     }
 
-    @GetMapping("/course/list")
+    @GetMapping("/course")
     public List<Course> listCourse(Model model) {
 
-        var courses = (List<Course>) courseService.findAll();
-
-        model.addAttribute("courses", courses);
-
-        return courses;
+        return (List<Course>) courseRepository.findAll();
     }
 
     @GetMapping("/stc/list")
     public List<StudentToCourse> listSTC(Model model) {
 
-        var stc = (List<StudentToCourse>) stcService.findAll();
-
-        model.addAttribute("stc", stc);
-
-        return stc;
+        return (List<StudentToCourse>) stcRepository.findAll();
     }
     @GetMapping("/cast/list")
     public List<CustomSTC> listCSTC(Model model) {
 
-        var cast = (List<CustomSTC>) castService.findAll();
-
-        model.addAttribute("cast", cast);
-
-        return cast;
+        return (List<CustomSTC>) customSTCRepo.findAll();
     }
 }
