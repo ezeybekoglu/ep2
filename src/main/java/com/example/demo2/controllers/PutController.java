@@ -10,18 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-public class PutController {
-
-
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private STCRepository stcRepository;
-    @Autowired
-    private CustomSTCRepo castRepo;
+@RestController
+public class PutController extends Controller {
 
     @PutMapping("/student/{id}")
     Student replaceStudent(@RequestBody Student newStudent, @PathVariable Long id) {

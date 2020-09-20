@@ -17,18 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-public class PostController {
-
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private STCRepository stcRepository;
-    @Autowired
-    private CustomSTCRepo castRepo;
-
-
+public class PostController extends Controller {
 
 
     @PostMapping("/student")
@@ -126,14 +115,14 @@ public class PostController {
             course = c;
         }
         cast = new CustomSTC();
-        if (castRepo.existsByCourse_idAndStudent_id(course.getId(), student.getId())) {
+        if (customSTCRepo.existsByCourse_idAndStudent_id(course.getId(), student.getId())) {
             System.out.println("exists");
             throw new IllegalArgumentException("Record exists.");
         } else {
             System.out.println("not exists");
             cast.setStudent(student);
             cast.setCourse(course);
-            castRepo.save(cast);
+            customSTCRepo.save(cast);
         }
         return cast;
     }
@@ -150,7 +139,7 @@ public class PostController {
         //curl -X POST localhost:8080/cast -H 'Content-type:application/json' -d '{"course":{"id":3,"name":"mat2"},"student":{"id":2,"name":"efe1"}}'
 
         cast = new CustomSTC();
-        if (castRepo.existsByCourse_idAndStudent_id(course.getId(), student.getId())) {
+        if (customSTCRepo.existsByCourse_idAndStudent_id(course.getId(), student.getId())) {
             System.out.println("exists");
             throw new IllegalArgumentException("Record exists.");
         } else {
@@ -164,7 +153,7 @@ public class PostController {
 
             cast.setStudent(s);
             cast.setCourse(c);
-            castRepo.save(cast);
+            customSTCRepo.save(cast);
         }
         return cast;
     }

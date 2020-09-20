@@ -10,13 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DeleteController {
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private CustomSTCRepo customSTCRepo;
+public class DeleteController extends Controller {
 
 
     @DeleteMapping(value = "/student/{id}")

@@ -15,16 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class GetController {
+public class GetController extends Controller {
 
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private STCRepository stcRepository;
-    @Autowired
-    private CustomSTCRepo customSTCRepo;
 
     @GetMapping("/student")
     List<Student> students() {
