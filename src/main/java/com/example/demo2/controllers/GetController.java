@@ -1,5 +1,5 @@
 package com.example.demo2.controllers;
-import com.example.demo2.StudentNotFoundException;
+import com.example.demo2.NotFoundException;
 import com.example.demo2.model.Course;
 import com.example.demo2.model.CustomSTC;
 import com.example.demo2.model.Student;
@@ -8,10 +8,6 @@ import com.example.demo2.repository.CourseRepository;
 import com.example.demo2.repository.CustomSTCRepo;
 import com.example.demo2.repository.STCRepository;
 import com.example.demo2.repository.StudentRepository;
-import com.example.demo2.services.ICSTCService;
-import com.example.demo2.services.ICourseService;
-import com.example.demo2.services.ISTCService;
-import com.example.demo2.services.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +36,7 @@ public class GetController {
     Student one(@PathVariable Long id) {
 
         return studentRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException(id));
+                .orElseThrow(() -> new NotFoundException(id));
     }
 
 
@@ -57,6 +53,15 @@ public class GetController {
 
         return (List<Course>) courseRepository.findAll();
     }
+    // Single item
+
+    @GetMapping("/course/{id}")
+    Course oneCourse(@PathVariable Long id) {
+
+        return courseRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id));
+    }
+
 
     @GetMapping("/stc/list")
     public List<StudentToCourse> listSTC(Model model) {

@@ -1,12 +1,10 @@
 package com.example.demo2.controllers;
 
-import com.example.demo2.StudentNotFoundException;
 import com.example.demo2.model.*;
 import com.example.demo2.repository.CourseRepository;
 import com.example.demo2.repository.CustomSTCRepo;
 import com.example.demo2.repository.STCRepository;
 import com.example.demo2.repository.StudentRepository;
-import com.example.demo2.services.StudentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
