@@ -8,7 +8,12 @@ import com.example.demo2.repository.CourseRepository;
 import com.example.demo2.repository.CustomSTCRepo;
 import com.example.demo2.repository.STCRepository;
 import com.example.demo2.repository.StudentRepository;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +26,12 @@ public class GetController extends Controller {
     @GetMapping("/student")
     List<Student> students() {
         return (List<Student>) studentRepository.findAll();
+    }
+
+    @GetMapping("/students/{page}")
+    Page<Student> studentss(@PathVariable Integer page) {
+        Pageable paging = PageRequest.of(page-1, 5);
+        return (Page<Student>) studentRepository.findAll(paging);
     }
     // Single item
 

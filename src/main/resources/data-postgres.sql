@@ -1,6 +1,6 @@
-INSERT INTO student(name) VALUES('efe0');
-INSERT INTO student(name) VALUES('efe1');
-INSERT INTO student(name) VALUES('efe2');
+INSERT INTO student(name) VALUES('ali veli');
+INSERT INTO student(name) VALUES('ayse falan');
+INSERT INTO student(name) VALUES('fatma filan');
 INSERT INTO student(name) VALUES('efe3');
 INSERT INTO student(name) VALUES('efe4');
 INSERT INTO student(name) VALUES('efe5');
