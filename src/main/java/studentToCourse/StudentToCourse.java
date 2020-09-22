@@ -1,10 +1,13 @@
-package com.example.demo2.model;
+package studentToCourse;
+
+import course.Course;
+import student.Student;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="student_to_course")
-public class CustomSTC {
+public class StudentToCourse {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")

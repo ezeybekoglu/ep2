@@ -1,4 +1,4 @@
-package com.example.demo2.model;
+package student;
 
 
 

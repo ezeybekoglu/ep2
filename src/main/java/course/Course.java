@@ -1,4 +1,4 @@
-package com.example.demo2.model;
+package course;
 
 import javax.persistence.*;
 

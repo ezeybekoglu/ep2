@@ -1,7 +1,6 @@
-package com.example.demo2.repository;
+package course;
 
-import com.example.demo2.model.Course;
-import com.example.demo2.model.Student;
+import course.Course;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CourseRepository extends CrudRepository<Course, Long> {
