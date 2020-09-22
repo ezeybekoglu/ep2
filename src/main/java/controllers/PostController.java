@@ -18,10 +18,7 @@ import java.util.Map;
 public class PostController extends Controller {
 
 
-    @PostMapping("/student")
-    Student newStudent(@RequestBody Student newStudent) {
-        return studentRepository.save(newStudent);
-    }
+
 
 
 

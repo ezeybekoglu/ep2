@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DeleteController extends Controller {
 
 
-    @DeleteMapping(value = "/student/{id}")
-    public void deleteStudent(@PathVariable Long id) {
-        studentRepository.deleteById(id);
-    }
+
 
 
 

@@ -2,7 +2,6 @@ package controllers;
 
 import course.CourseRepository;
 import studentToCourse.StudentToCourseRepository;
-import com.example.demo2.repository.STCRepository;
 import student.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

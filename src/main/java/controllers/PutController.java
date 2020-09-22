@@ -10,18 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PutController extends Controller {
 
-    @PutMapping("/student/{id}")
-    Student replaceStudent(@RequestBody Student newStudent, @PathVariable Long id) {
 
-        return studentRepository.findById(id)
-                .map(student -> {
-                    student.setName(newStudent.getName());
-                    return studentRepository.save(student);
-                })
-                .orElseGet(() -> {
-                    newStudent.setId(id);
-                    return studentRepository.save(newStudent);
-                });
-    }
 
 }

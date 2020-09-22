@@ -15,33 +15,7 @@ import java.util.List;
 public class GetController extends Controller {
 
 
-    @GetMapping("/student")
-    List<Student> students() {
-        return (List<Student>) studentRepository.findAll();
-    }
 
-    @GetMapping("/students/{page}")
-    Page<Student> studentss(@PathVariable Integer page) {
-        Pageable paging = PageRequest.of(page-1, 5);
-        return (Page<Student>) studentRepository.findAll(paging);
-    }
-    // Single item
-
-    @GetMapping("/student/{id}")
-    Student one(@PathVariable Long id) {
-
-        return studentRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id));
-    }
-
-
-
-
-    @GetMapping("/student/list")
-    public List<Student> listStudent(Model model) {
-
-        return (List<Student>) studentRepository.findAll();
-    }
 
 
 
