@@ -27,7 +27,7 @@ public class StudentToCourseController {
         StudentToCourse cast;
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(str);
-        Course course = mapper.convertValue(node.get("course"), Course.class);
+        Course course = mapper.convertValue(node.get("com/example/demo2/course"), Course.class);
         Student student = mapper.convertValue(node.get("com/example/demo2/student/com.example.demo2.student"), Student.class);
 
 

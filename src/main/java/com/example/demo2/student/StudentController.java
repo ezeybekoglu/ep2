@@ -40,7 +40,7 @@ public class StudentController {
     }
     // Single item
 
-    @GetMapping("/com/example/demo2/student/{id}")
+    @GetMapping("/student/{id}")
     Student one(@PathVariable Long id) {
 
         return studentRepository.findById(id)
@@ -50,18 +50,18 @@ public class StudentController {
 
 
 
-    @GetMapping("/com/example/demo2/student/list")
+    @GetMapping("/student/list")
     public List<Student> listStudent(Model model) {
 
         return (List<Student>) studentRepository.findAll();
     }
 
-    @PostMapping("/com/example/demo2/student")
+    @PostMapping("/student")
     Student newStudent(@RequestBody Student newStudent) {
         return studentRepository.save(newStudent);
     }
 
-    @PutMapping("/com/example/demo2/student/{id}")
+    @PutMapping("/student/{id}")
     Student replaceStudent(@RequestBody Student newStudent, @PathVariable Long id) {
 
         return studentRepository.findById(id)

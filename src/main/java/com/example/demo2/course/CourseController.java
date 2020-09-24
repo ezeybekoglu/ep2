@@ -12,31 +12,31 @@ public class CourseController  {
     @Autowired
     private CourseRepository courseRepository;
 
-    @GetMapping("/com/example/demo2/controller")
+    @GetMapping("/course")
     public List<Course> listCourse(Model model) {
 
         return (List<Course>) courseRepository.findAll();
     }
     // Single item
 
-    @GetMapping("/com/example/demo2/controller/{id}")
+    @GetMapping("/course/{id}")
     Course oneCourse(@PathVariable Long id) {
 
         return courseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
     }
 
-    @PostMapping("/com/example/demo2/controller")
+    @PostMapping("/course")
     Course newCourse(@RequestBody Course newCourse) {
         return courseRepository.save(newCourse);
     }
 
-    @DeleteMapping(value = "/com/example/demo2/controller/{id}")
+    @DeleteMapping(value = "/course/{id}")
     public void deleteCourse(@PathVariable Long id) {
         courseRepository.deleteById(id);
     }
 
-    @PutMapping("/com/example/demo2/controller/{id}")
+    @PutMapping("/course/{id}")
     Course replaceCourse(@RequestBody Course newCourse, @PathVariable Long id) {
 
         return courseRepository.findById(id)
