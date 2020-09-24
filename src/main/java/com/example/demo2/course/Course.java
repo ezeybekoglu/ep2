@@ -1,9 +1,9 @@
-package course;
+package com.example.demo2.course;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="course")
+@Table(name= "course")
 public class Course {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

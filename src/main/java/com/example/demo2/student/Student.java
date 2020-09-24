@@ -1,11 +1,11 @@
-package student;
+package com.example.demo2.student;
 
 
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="student")
+@Table(name= "student")
 public class Student {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) @Column(name="id")
     private long id;

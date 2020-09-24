@@ -1,4 +1,4 @@
-package studentToCourse;
+package com.example.demo2.studentToCourse;
 
 import org.springframework.data.repository.CrudRepository;
 

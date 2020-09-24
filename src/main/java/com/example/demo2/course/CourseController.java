@@ -1,40 +1,42 @@
-package course;
+package com.example.demo2.course;
 
 import com.example.demo2.NotFoundException;
-import controllers.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public class CourseController extends Controller {
+public class CourseController  {
+    @Autowired
+    private CourseRepository courseRepository;
 
-    @GetMapping("/course")
+    @GetMapping("/com/example/demo2/controller")
     public List<Course> listCourse(Model model) {
 
         return (List<Course>) courseRepository.findAll();
     }
     // Single item
 
-    @GetMapping("/course/{id}")
+    @GetMapping("/com/example/demo2/controller/{id}")
     Course oneCourse(@PathVariable Long id) {
 
         return courseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
     }
 
-    @PostMapping("/course")
+    @PostMapping("/com/example/demo2/controller")
     Course newCourse(@RequestBody Course newCourse) {
         return courseRepository.save(newCourse);
     }
 
-    @DeleteMapping(value = "/course/{id}")
+    @DeleteMapping(value = "/com/example/demo2/controller/{id}")
     public void deleteCourse(@PathVariable Long id) {
         courseRepository.deleteById(id);
     }
 
-    @PutMapping("/course/{id}")
+    @PutMapping("/com/example/demo2/controller/{id}")
     Course replaceCourse(@RequestBody Course newCourse, @PathVariable Long id) {
 
         return courseRepository.findById(id)

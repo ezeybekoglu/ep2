@@ -1,7 +1,7 @@
-package student;
+package com.example.demo2.student;
 
 import com.example.demo2.NotFoundException;
-import controllers.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,15 +11,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class StudentController extends Controller {
+public class StudentController {
+
+    @Autowired
+    private StudentRepository studentRepository;
+
 
     @DeleteMapping(value = "/student/{id}")
     public void deleteStudent(@PathVariable Long id) {
         studentRepository.deleteById(id);
     }
+    @GetMapping("/")
+    String index(){
+        return "Ana Sayfa";
+    }
+
 
     @GetMapping("/student")
     List<Student> students() {
+
         return (List<Student>) studentRepository.findAll();
     }
 
@@ -30,7 +40,7 @@ public class StudentController extends Controller {
     }
     // Single item
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/com/example/demo2/student/{id}")
     Student one(@PathVariable Long id) {
 
         return studentRepository.findById(id)
@@ -40,18 +50,18 @@ public class StudentController extends Controller {
 
 
 
-    @GetMapping("/student/list")
+    @GetMapping("/com/example/demo2/student/list")
     public List<Student> listStudent(Model model) {
 
         return (List<Student>) studentRepository.findAll();
     }
 
-    @PostMapping("/student")
+    @PostMapping("/com/example/demo2/student")
     Student newStudent(@RequestBody Student newStudent) {
         return studentRepository.save(newStudent);
     }
 
-    @PutMapping("/student/{id}")
+    @PutMapping("/com/example/demo2/student/{id}")
     Student replaceStudent(@RequestBody Student newStudent, @PathVariable Long id) {
 
         return studentRepository.findById(id)

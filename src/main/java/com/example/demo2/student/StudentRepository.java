@@ -1,6 +1,5 @@
-package student;
+package com.example.demo2.student;
 
-import student.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;

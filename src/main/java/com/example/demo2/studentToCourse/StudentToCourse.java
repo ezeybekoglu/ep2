@@ -1,7 +1,7 @@
-package studentToCourse;
+package com.example.demo2.studentToCourse;
 
-import course.Course;
-import student.Student;
+import com.example.demo2.course.Course;
+import com.example.demo2.student.Student;
 
 import javax.persistence.*;
 
